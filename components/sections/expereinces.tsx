@@ -3,7 +3,7 @@ import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
 import { useState, useEffect } from "react";
 
 export default function Experience() {
-  const [hoveredIndex, setHoveredIndex] = useState(null);
+  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
 
@@ -12,7 +12,7 @@ export default function Experience() {
   const y = useSpring(mouseY, springConfig);
 
   useEffect(() => {
-    const handleMouseMove = (e) => {
+    const handleMouseMove = (e: MouseEvent) => {
       mouseX.set(e.clientX);
       mouseY.set(e.clientY);
     };
@@ -97,7 +97,6 @@ export default function Experience() {
       y: 0,
       transition: {
         duration: 0.6,
-        ease: [0.22, 1, 0.36, 1],
       },
     },
   };
@@ -140,13 +139,13 @@ export default function Experience() {
             02.
           </motion.span>
           <motion.h2
-            className="text-3xl md:text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-white to-gray-400"
+            className="text-3xl md:text-4xl font-bold bg-clip-text text-transparent bg-linear-to-r from-white to-gray-400"
             whileHover={{ scale: 1.02 }}
           >
             Where I've Worked
           </motion.h2>
           <motion.div
-            className="flex-1 h-px bg-gradient-to-r from-purple-500/50 to-transparent"
+            className="flex-1 h-px bg-linear-to-r from-purple-500/50 to-transparent"
             initial={{ scaleX: 0 }}
             whileInView={{ scaleX: 1 }}
             viewport={{ once: true }}
@@ -165,7 +164,7 @@ export default function Experience() {
       >
         {/* Vertical line */}
         <motion.div
-          className="absolute left-0 md:left-8 top-0 bottom-0 w-px bg-gradient-to-b from-purple-500 via-blue-500 to-transparent"
+          className="absolute left-0 md:left-8 top-0 bottom-0 w-px bg-linear-to-b from-purple-500 via-blue-500 to-transparent"
           initial={{ scaleY: 0 }}
           whileInView={{ scaleY: 1 }}
           viewport={{ once: true }}
@@ -183,7 +182,7 @@ export default function Experience() {
           >
             {/* Timeline dot */}
             <motion.div
-              className={`hidden md:block absolute left-8 top-8 w-4 h-4 rounded-full bg-gradient-to-r ${exp.gradient} -translate-x-1/2`}
+              className={`hidden md:block absolute left-8 top-8 w-4 h-4 rounded-full bg-linear-to-r ${exp.gradient} -translate-x-1/2`}
               whileHover={{ scale: 1.5 }}
               animate={{
                 boxShadow:
@@ -202,7 +201,7 @@ export default function Experience() {
             >
               {/* Gradient border on hover */}
               <motion.div
-                className={`absolute -inset-[1px] bg-gradient-to-r ${exp.gradient} rounded-2xl opacity-0 blur group-hover:opacity-50 transition-opacity duration-500`}
+                className={`absolute -inset-px bg-linear-to-r ${exp.gradient} rounded-2xl opacity-0 blur group-hover:opacity-50 transition-opacity duration-500`}
               />
 
               {/* Card content */}
@@ -218,7 +217,7 @@ export default function Experience() {
                         {exp.role}
                       </motion.h3>
                       <motion.span
-                        className={`px-3 py-1 text-xs font-semibold rounded-full bg-gradient-to-r ${exp.gradient} text-white`}
+                        className={`px-3 py-1 text-xs font-semibold rounded-full bg-linear-to-r ${exp.gradient} text-white`}
                         whileHover={{ scale: 1.1 }}
                       >
                         {exp.type}
@@ -229,7 +228,7 @@ export default function Experience() {
                       className="flex items-center gap-2 text-gray-400"
                       whileHover={{ x: 5 }}
                     >
-                      <span className="text-lg font-medium bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-blue-400">
+                      <span className="text-lg font-medium bg-clip-text text-transparent bg-linear-to-r from-purple-400 to-blue-400">
                         @ {exp.company}
                       </span>
                     </motion.div>
@@ -270,7 +269,7 @@ export default function Experience() {
                     >
                       {/* Icon */}
                       <motion.span
-                        className="text-2xl mt-1 flex-shrink-0"
+                        className="text-2xl mt-1 shrink-0"
                         whileHover={{ scale: 1.3, rotate: 10 }}
                       >
                         {achievement.icon}
@@ -283,7 +282,7 @@ export default function Experience() {
 
                       {/* Hover indicator */}
                       <motion.div
-                        className={`absolute left-0 w-1 h-full bg-gradient-to-b ${exp.gradient} rounded-full opacity-0 group-hover/item:opacity-100 transition-opacity`}
+                        className={`absolute left-0 w-1 h-full bg-linear-to-b ${exp.gradient} rounded-full opacity-0 group-hover/item:opacity-100 transition-opacity`}
                       />
                     </motion.div>
                   ))}

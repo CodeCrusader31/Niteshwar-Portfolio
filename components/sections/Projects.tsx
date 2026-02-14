@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { projects } from "@/data/project";
 
 export default function Projects() {
-  const [hoveredIndex, setHoveredIndex] = useState(null);
+  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
 
@@ -13,7 +13,7 @@ export default function Projects() {
   const y = useSpring(mouseY, springConfig);
 
   useEffect(() => {
-    const handleMouseMove = (e) => {
+    const handleMouseMove = (e: MouseEvent) => {
       mouseX.set(e.clientX);
       mouseY.set(e.clientY);
     };
@@ -39,7 +39,6 @@ export default function Projects() {
       y: 0,
       transition: {
         duration: 0.6,
-        ease: [0.22, 1, 0.36, 1],
       },
     },
   };
@@ -92,13 +91,13 @@ export default function Projects() {
             03.
           </motion.span>
           <motion.h2
-            className="text-3xl md:text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-white to-gray-400"
+            className="text-3xl md:text-4xl font-bold bg-clip-text text-transparent bg-linear-to-r from-white to-gray-400"
             whileHover={{ scale: 1.02 }}
           >
             Things I've Built
           </motion.h2>
           <motion.div
-            className="flex-1 h-px bg-gradient-to-r from-purple-500/50 to-transparent"
+            className="flex-1 h-px bg-linear-to-r from-purple-500/50 to-transparent"
             initial={{ scaleX: 0 }}
             whileInView={{ scaleX: 1 }}
             viewport={{ once: true }}
@@ -135,7 +134,7 @@ export default function Projects() {
           >
             {/* Animated gradient border */}
             <motion.div
-              className={`absolute -inset-[1px] bg-gradient-to-r ${gradients[index % gradients.length]} rounded-2xl opacity-0 blur group-hover:opacity-75 transition-opacity duration-500`}
+              className={`absolute -inset-px bg-linear-to-r ${gradients[index % gradients.length]} rounded-2xl opacity-0 blur group-hover:opacity-75 transition-opacity duration-500`}
               animate={{
                 opacity: hoveredIndex === index ? 0.75 : 0,
               }}
@@ -149,7 +148,7 @@ export default function Projects() {
               {/* Project Header */}
               <div className="flex items-start justify-between mb-4">
                 <motion.div
-                  className="p-3 bg-gradient-to-br from-gray-800 to-gray-900 rounded-lg border border-gray-700 group-hover:border-purple-500/50 transition-colors"
+                  className="p-3 bg-linear-to-br from-gray-800 to-gray-900 rounded-lg border border-gray-700 group-hover:border-purple-500/50 transition-colors"
                   whileHover={{ scale: 1.1, rotate: 5 }}
                 >
                   <svg
@@ -212,7 +211,7 @@ export default function Projects() {
 
               {/* Project Title */}
               <motion.h3
-                className="text-xl md:text-2xl font-bold text-white mb-3 group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-purple-400 group-hover:to-blue-400 transition-all"
+                className="text-xl md:text-2xl font-bold text-white mb-3 group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-linear-to-r group-hover:from-purple-400 group-hover:to-blue-400 transition-all"
                 whileHover={{ x: 5 }}
               >
                 {project.title}
@@ -227,7 +226,7 @@ export default function Projects() {
               </motion.p>
 
               {/* Highlights */}
-              <div className="space-y-2 mb-6 flex-grow">
+              <div className="space-y-2 mb-6 grow">
                 {project.highlights.map((point, i) => (
                   <motion.div
                     key={i}
@@ -238,7 +237,7 @@ export default function Projects() {
                     transition={{ delay: i * 0.05 }}
                     whileHover={{ x: 5 }}
                   >
-                    <span className="text-purple-400 mt-1.5 flex-shrink-0">▹</span>
+                    <span className="text-purple-400 mt-1.5 shrink-0">▹</span>
                     <p className="text-sm text-gray-400 group-hover/item:text-gray-300 transition-colors">
                       {point}
                     </p>
@@ -270,7 +269,7 @@ export default function Projects() {
 
               {/* Hover effect overlay */}
               <motion.div
-                className="absolute inset-0 rounded-2xl bg-gradient-to-br from-purple-500/5 to-blue-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
+                className="absolute inset-0 rounded-2xl bg-linear-to-br from-purple-500/5 to-blue-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
               />
             </motion.div>
           </motion.div>
@@ -299,7 +298,7 @@ export default function Projects() {
         >
           {/* Animated gradient background */}
           <motion.div
-            className="absolute inset-0 bg-gradient-to-r from-purple-500/10 via-blue-500/10 to-purple-500/10"
+            className="absolute inset-0 bg-linear-to-r from-purple-500/10 via-blue-500/10 to-purple-500/10"
             initial={{ opacity: 0, x: "-100%" }}
             whileHover={{ opacity: 1, x: "100%" }}
             transition={{ duration: 0.6 }}

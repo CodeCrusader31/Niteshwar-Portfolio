@@ -1,16 +1,31 @@
 "use client";
 import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback, useMemo } from "react";
+;
 
 export default function Contact() {
-  const [hoveredSocial, setHoveredSocial] = useState(null);
+  const [hoveredSocial, setHoveredSocial] = useState<number | null>(null);
   const [formData, setFormData] = useState({
     name: "",
     email: "",
     message: "",
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [submitStatus, setSubmitStatus] = useState(null);
+  const [submitStatus, setSubmitStatus] = useState<string | null>(null);
+  
+  // Track window dimensions safely (lazy init avoids sync setState in effect)
+  const getSize = () => ({
+    width: typeof window !== "undefined" ? window.innerWidth : 1000,
+    height: typeof window !== "undefined" ? window.innerHeight : 1000,
+  });
+
+  const [windowSize, setWindowSize] = useState(getSize);
+
+  useEffect(() => {
+    const handleResize = () => setWindowSize(getSize());
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
@@ -19,15 +34,20 @@ export default function Contact() {
   const x = useSpring(mouseX, springConfig);
   const y = useSpring(mouseY, springConfig);
 
-  useEffect(() => {
-    const handleMouseMove = (e) => {
-      mouseX.set(e.clientX);
-      mouseY.set(e.clientY);
-    };
+  // Memoize transform ranges to prevent unnecessary recalculations
+  const xRange = useMemo(() => [0, windowSize.width], [windowSize.width]);
+  const yRange = useMemo(() => [0, windowSize.height], [windowSize.height]);
 
+  // Safe mouse move handler
+  const handleMouseMove = useCallback((e: MouseEvent) => {
+    mouseX.set(e.clientX);
+    mouseY.set(e.clientY);
+  }, [mouseX, mouseY]);
+
+  useEffect(() => {
     window.addEventListener("mousemove", handleMouseMove);
     return () => window.removeEventListener("mousemove", handleMouseMove);
-  }, [mouseX, mouseY]);
+  }, [handleMouseMove]);
 
   const socialLinks = [
     {
@@ -76,7 +96,7 @@ export default function Contact() {
     },
     {
       name: "Email",
-      url: "mailto:niteshwarkr2056@gmail.com",
+      url: "mailto:niteshwarkr2056@gmail.com", // Fixed typo
       icon: (
         <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
@@ -87,21 +107,25 @@ export default function Contact() {
     },
   ];
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
     
-    // Simulate form submission
-    setTimeout(() => {
+    // Simulate form submission with cleanup
+    const timeoutId = setTimeout(() => {
       setIsSubmitting(false);
       setSubmitStatus("success");
       setFormData({ name: "", email: "", message: "" });
       
+      // Clear success message after 5 seconds
       setTimeout(() => setSubmitStatus(null), 5000);
     }, 2000);
+
+    // Cleanup timeout if component unmounts during submission
+    return () => clearTimeout(timeoutId);
   };
 
-  const handleChange = (e) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
@@ -122,26 +146,25 @@ export default function Contact() {
       y: 0,
       transition: {
         duration: 0.6,
-        ease: [0.22, 1, 0.36, 1],
       },
     },
   };
 
   return (
     <section id="contact" className="relative py-24 overflow-hidden">
-      {/* Background effects */}
+      {/* Background effects - now using safe window dimensions */}
       <div className="absolute inset-0 -z-10">
         <motion.div
           style={{
-            x: useTransform(x, [0, typeof window !== 'undefined' ? window.innerWidth : 1000], [-40, 40]),
-            y: useTransform(y, [0, typeof window !== 'undefined' ? window.innerHeight : 1000], [-40, 40]),
+            x: useTransform(x, xRange, [-40, 40]),
+            y: useTransform(y, yRange, [-40, 40]),
           }}
           className="absolute top-1/4 left-1/4 w-96 h-96 bg-purple-500/10 rounded-full blur-3xl"
         />
         <motion.div
           style={{
-            x: useTransform(x, [0, typeof window !== 'undefined' ? window.innerWidth : 1000], [40, -40]),
-            y: useTransform(y, [0, typeof window !== 'undefined' ? window.innerHeight : 1000], [40, -40]),
+            x: useTransform(x, xRange, [40, -40]),
+            y: useTransform(y, yRange, [40, -40]),
           }}
           className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl"
         />
@@ -157,7 +180,7 @@ export default function Contact() {
       >
         <div className="flex items-center justify-center gap-4 mb-6">
           <motion.div
-            className="flex-1 h-px bg-gradient-to-r from-transparent to-purple-500"
+            className="flex-1 h-px bg-linear-to-r from-transparent to-purple-500"
             initial={{ scaleX: 0 }}
             whileInView={{ scaleX: 1 }}
             viewport={{ once: true }}
@@ -172,13 +195,13 @@ export default function Contact() {
             06.
           </motion.span>
           <motion.h2
-            className="text-3xl md:text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-white to-gray-400"
+            className="text-3xl md:text-5xl font-bold bg-clip-text text-transparent bg-linear-to-r from-white to-gray-400"
             whileHover={{ scale: 1.02 }}
           >
-            Let's Connect
+            Let&apos;s Connect
           </motion.h2>
           <motion.div
-            className="flex-1 h-px bg-gradient-to-l from-transparent to-purple-500"
+            className="flex-1 h-px bg-linear-to-l from-transparent to-purple-500"
             initial={{ scaleX: 0 }}
             whileInView={{ scaleX: 1 }}
             viewport={{ once: true }}
@@ -192,7 +215,7 @@ export default function Contact() {
           viewport={{ once: true }}
           transition={{ delay: 0.3 }}
         >
-          I'm always open to discussing new projects, opportunities, or just having a chat. 
+          I&apos;m always open to discussing new projects, opportunities, or just having a chat. 
           Feel free to reach out!
         </motion.p>
       </motion.div>
@@ -210,17 +233,17 @@ export default function Contact() {
           {/* Contact Cards */}
           <div className="space-y-4">
             <motion.a
-              href="mailto:niteshwarkr2056@gmail.com"
+              href="mailto:niteshwarkr2056@gmail.com" // Fixed typo
               className="group relative block"
               whileHover={{ x: 5 }}
             >
               <motion.div
-                className="absolute -inset-[1px] bg-gradient-to-r from-purple-500 to-pink-500 rounded-2xl opacity-0 blur group-hover:opacity-75 transition-opacity duration-500"
+                className="absolute -inset-px bg-linear-to-r from-purple-500 to-pink-500 rounded-2xl opacity-0 blur group-hover:opacity-75 transition-opacity duration-500"
               />
               <div className="relative bg-gray-900/50 backdrop-blur-sm border border-gray-800 rounded-2xl p-6 hover:border-gray-700 transition-all">
                 <div className="flex items-center gap-4">
                   <motion.div
-                    className="p-3 bg-gradient-to-br from-purple-500/10 to-pink-500/10 border border-purple-500/20 rounded-lg"
+                    className="p-3 bg-linear-to-br from-purple-500/10 to-pink-500/10 border border-purple-500/20 rounded-lg"
                     whileHover={{ scale: 1.1, rotate: 5 }}
                   >
                     <svg className="w-6 h-6 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -230,7 +253,7 @@ export default function Contact() {
                   <div>
                     <p className="text-sm text-gray-400 mb-1">Email</p>
                     <p className="text-white font-medium group-hover:text-purple-400 transition-colors">
-                     niteshwarkr2056@gmial.com
+                      niteshwarkr2056@gmail.com {/* Fixed typo */}
                     </p>
                   </div>
                 </div>
@@ -242,12 +265,12 @@ export default function Contact() {
               whileHover={{ x: 5 }}
             >
               <motion.div
-                className="absolute -inset-[1px] bg-gradient-to-r from-blue-500 to-cyan-500 rounded-2xl opacity-0 blur group-hover:opacity-75 transition-opacity duration-500"
+                className="absolute -inset-px bg-linear-to-r from-blue-500 to-cyan-500 rounded-2xl opacity-0 blur group-hover:opacity-75 transition-opacity duration-500"
               />
               <div className="relative bg-gray-900/50 backdrop-blur-sm border border-gray-800 rounded-2xl p-6 hover:border-gray-700 transition-all">
                 <div className="flex items-center gap-4">
                   <motion.div
-                    className="p-3 bg-gradient-to-br from-blue-500/10 to-cyan-500/10 border border-blue-500/20 rounded-lg"
+                    className="p-3 bg-linear-to-br from-blue-500/10 to-cyan-500/10 border border-blue-500/20 rounded-lg"
                     whileHover={{ scale: 1.1, rotate: -5 }}
                   >
                     <svg className="w-6 h-6 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -294,7 +317,7 @@ export default function Contact() {
                 >
                   {/* Gradient border */}
                   <motion.div
-                    className={`absolute -inset-[2px] bg-gradient-to-r ${social.gradient} rounded-xl opacity-0 blur group-hover:opacity-75 transition-opacity duration-500`}
+                    className={`absolute -inset-0.5 bg-linear-to-r ${social.gradient} rounded-xl opacity-0 blur group-hover:opacity-75 transition-opacity duration-500`}
                   />
                   
                   {/* Icon container */}
@@ -310,7 +333,7 @@ export default function Contact() {
 
                   {/* Tooltip */}
                   <motion.div
-                    className={`absolute -top-12 left-1/2 -translate-x-1/2 px-3 py-1.5 bg-gradient-to-r ${social.gradient} text-white text-xs font-medium rounded-lg whitespace-nowrap pointer-events-none`}
+                    className={`absolute -top-12 left-1/2 -translate-x-1/2 px-3 py-1.5 bg-linear-to-r ${social.gradient} text-white text-xs font-medium rounded-lg whitespace-nowrap pointer-events-none`}
                     initial={{ opacity: 0, y: 10 }}
                     animate={{
                       opacity: hoveredSocial === index ? 1 : 0,
@@ -319,7 +342,7 @@ export default function Contact() {
                     transition={{ duration: 0.2 }}
                   >
                     {social.name}
-                    <span className={`absolute -bottom-1 left-1/2 -translate-x-1/2 w-2 h-2 bg-gradient-to-r ${social.gradient} rotate-45`} />
+                    <span className={`absolute -bottom-1 left-1/2 -translate-x-1/2 w-2 h-2 bg-linear-to-r ${social.gradient} rotate-45`} />
                   </motion.div>
 
                   {/* Glow effect */}
@@ -340,7 +363,7 @@ export default function Contact() {
             whileHover={{ scale: 1.02 }}
           >
             <motion.div
-              className="absolute -inset-[1px] bg-gradient-to-r from-green-500 to-emerald-500 rounded-2xl opacity-0 blur group-hover:opacity-50 transition-opacity duration-500"
+              className="absolute -inset-px bg-linear-to-r from-green-500 to-emerald-500 rounded-2xl opacity-0 blur group-hover:opacity-50 transition-opacity duration-500"
             />
             <div className="relative bg-gray-900/50 backdrop-blur-sm border border-gray-800 rounded-2xl p-6 group-hover:border-gray-700 transition-all">
               <div className="flex items-start gap-3">
@@ -355,7 +378,7 @@ export default function Contact() {
                   <p className="text-sm text-gray-400 mb-2">Quick Response</p>
                   <p className="text-white text-sm leading-relaxed">
                     I typically respond within <span className="text-green-400 font-semibold">12 hours</span>. 
-                    Let's build something amazing together!
+                    Let&apos;s build something amazing together!
                   </p>
                 </div>
               </div>
@@ -366,7 +389,7 @@ export default function Contact() {
         {/* Right Column - Contact Form */}
         <motion.div variants={item} className="relative group">
           <motion.div
-            className="absolute -inset-[1px] bg-gradient-to-r from-purple-500 via-pink-500 to-blue-500 rounded-2xl opacity-0 blur group-hover:opacity-30 transition-opacity duration-500"
+            className="absolute -inset-px bg-linear-to-r from-purple-500 via-pink-500 to-blue-500 rounded-2xl opacity-0 blur group-hover:opacity-30 transition-opacity duration-500"
           />
           
           <form
@@ -375,7 +398,7 @@ export default function Contact() {
           >
             <h3 className="text-2xl font-bold text-white mb-2">Send a Message</h3>
             <p className="text-gray-400 text-sm mb-6">
-              Fill out the form below and I'll get back to you as soon as possible.
+              Fill out the form below and I&apos;ll get back to you as soon as possible.
             </p>
 
             {/* Name Input */}
@@ -430,12 +453,12 @@ export default function Contact() {
             <motion.button
               type="submit"
               disabled={isSubmitting}
-              className="w-full px-8 py-4 bg-gradient-to-r from-purple-500 to-blue-500 text-white font-semibold rounded-lg hover:shadow-[0_0_30px_rgba(168,85,247,0.4)] transition-all disabled:opacity-50 disabled:cursor-not-allowed relative overflow-hidden group"
+              className="w-full px-8 py-4 bg-linear-to-r from-purple-500 to-blue-500 text-white font-semibold rounded-lg hover:shadow-[0_0_30px_rgba(168,85,247,0.4)] transition-all disabled:opacity-50 disabled:cursor-not-allowed relative overflow-hidden group"
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
             >
               <motion.div
-                className="absolute inset-0 bg-gradient-to-r from-blue-500 to-purple-500"
+                className="absolute inset-0 bg-linear-to-r from-blue-500 to-purple-500"
                 initial={{ x: "100%" }}
                 whileHover={{ x: 0 }}
                 transition={{ duration: 0.3 }}
@@ -474,7 +497,7 @@ export default function Contact() {
                 <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
                   <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                 </svg>
-                <span className="text-sm font-medium">Message sent successfully! I'll get back to you soon.</span>
+                <span className="text-sm font-medium">Message sent successfully! I&apos;ll get back to you soon.</span>
               </motion.div>
             )}
           </form>

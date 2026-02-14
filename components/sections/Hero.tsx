@@ -13,7 +13,7 @@ export default function Hero() {
   // Mouse tracking
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
-
+      {/* Animated background linear orbs */}
   const springConfig = { damping: 25, stiffness: 150 };
   const x = useSpring(mouseX, springConfig);
   const y = useSpring(mouseY, springConfig);
@@ -27,7 +27,7 @@ export default function Hero() {
   const bgOrb3Y = useTransform(y, [0, windowSize.height], [-30, 30]);
 
   useEffect(() => {
-    const handleMouseMove = (e) => {
+    const handleMouseMove = (e: MouseEvent) => {
       setCursorPosition({ x: e.clientX, y: e.clientY });
       mouseX.set(e.clientX);
       mouseY.set(e.clientY);
@@ -62,7 +62,7 @@ export default function Hero() {
     visible: {
       opacity: 1,
       y: 0,
-      transition: { duration: 0.7, ease: [0.22, 1, 0.36, 1] },
+      transition: { duration: 0.7 },
     },
   };
 
@@ -71,7 +71,6 @@ export default function Hero() {
     transition: {
       duration: 4,
       repeat: Infinity,
-      ease: "easeInOut",
     },
   };
 
@@ -136,7 +135,7 @@ export default function Hero() {
       </div>
 
       {/* Grid pattern overlay */}
-      <div className="absolute inset-0 -z-10 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px]" />
+      <div className="absolute inset-0 -z-10 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-size-[24px_24px]" />
 
       {/* Mouse glow effect */}
       <motion.div
@@ -168,7 +167,7 @@ export default function Hero() {
             onHoverStart={() => setIsHovering(true)}
             onHoverEnd={() => setIsHovering(false)}
           >
-            <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-purple-500/10 to-blue-500/10 border border-purple-500/20 text-sm font-medium text-purple-300 cursor-default hover:border-purple-400/40 transition-colors">
+            <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-linear-to-r from-purple-500/10 to-blue-500/10 border border-purple-500/20 text-sm font-medium text-purple-300 cursor-default hover:border-purple-400/40 transition-colors">
               <span className="relative flex h-2 w-2">
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-purple-400 opacity-75"></span>
                 <span className="relative inline-flex rounded-full h-2 w-2 bg-purple-500"></span>
@@ -192,9 +191,9 @@ export default function Hero() {
           </motion.p>
 
           {/* Name */}
-          <motion.h1
+            <motion.h1
             variants={item}
-            className="text-4xl md:text-6xl lg:text-6xl font-bold mb-2 bg-clip-text text-transparent bg-gradient-to-r from-white via-white to-gray-400 cursor-default select-none"
+            className="text-4xl md:text-6xl lg:text-6xl font-bold mb-2 bg-clip-text text-transparent bg-linear-to-r from-white via-white to-gray-400 cursor-default select-none"
             whileHover={{
               scale: 1.02,
               textShadow: "0 0 20px rgba(168,85,247,0.5)",
@@ -386,7 +385,7 @@ export default function Hero() {
           >
             {/* Animated border gradient */}
             <motion.div
-              className="absolute -inset-1 bg-gradient-to-r from-purple-600 via-pink-600 to-blue-600 rounded-2xl blur opacity-75 group-hover:opacity-100 transition duration-1000"
+              className="absolute -inset-1 bg-linear-to-r from-purple-600 via-pink-600 to-blue-600 rounded-2xl blur opacity-75 group-hover:opacity-100 transition duration-1000"
               animate={{
                 rotate: [0, 360],
               }}
@@ -402,10 +401,10 @@ export default function Hero() {
               <motion.div
                 className="relative 
              w-64 h-80 
-             md:w-80 md:h-[420px] 
-             lg:w-96 lg:h-[520px] 
+             md:w-80 md:h-105 
+             lg:w-96 lg:h-130 
              rounded-2xl overflow-hidden 
-             bg-gradient-to-br from-gray-900 to-gray-800 
+             bg-linear-to-br from-gray-900 to-gray-800 
              border border-gray-700"
                 whileHover={{ rotateY: 5, rotateX: 5 }}
                 style={{ perspective: 1000 }}
@@ -420,7 +419,7 @@ export default function Hero() {
                 />
 
                 {/* Overlay gradient on hover */}
-                <motion.div className="absolute inset-0 bg-gradient-to-t from-purple-600/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                <motion.div className="absolute inset-0 bg-linear-to-t from-purple-600/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
               </motion.div>
 
               {/* Floating decorative elements */}
@@ -499,10 +498,10 @@ export default function Hero() {
 }
 
 // Magnetic Button Component (unchanged)
-function MagneticButton({ children }) {
+function MagneticButton({ children }: { children: React.ReactNode }) {
   const [position, setPosition] = useState({ x: 0, y: 0 });
 
-  const handleMouseMove = (e) => {
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     const rect = e.currentTarget.getBoundingClientRect();
     const x = e.clientX - rect.left - rect.width / 2;
     const y = e.clientY - rect.top - rect.height / 2;
@@ -527,7 +526,7 @@ function MagneticButton({ children }) {
 }
 
 // Social Link Component (reusable)
-function SocialLink({ href, label, icon, download }) {
+function SocialLink({ href, label, icon, download }: { href: string; label: string; icon: string; download?: boolean }) {
   const [isHovering, setIsHovering] = useState(false);
   const Icon = () => {
     switch (icon) {

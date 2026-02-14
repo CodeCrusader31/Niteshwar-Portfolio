@@ -6,7 +6,7 @@ export default function Footer() {
     <footer className="relative border-t border-gray-800 mt-24">
       {/* Top gradient line */}
       <motion.div
-        className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-purple-500 to-transparent"
+        className="absolute top-0 left-0 right-0 h-px bg-linear-to-r from-transparent via-purple-500 to-transparent"
         initial={{ scaleX: 0 }}
         whileInView={{ scaleX: 1 }}
         viewport={{ once: true }}
@@ -27,7 +27,7 @@ export default function Footer() {
             whileHover={{ scale: 1.02 }}
           >
             © {new Date().getFullYear()}{" "}
-            <span className="bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-blue-400 font-semibold">
+            <span className="bg-clip-text text-transparent bg-linear-to-r from-purple-400 to-blue-400 font-semibold">
               Niteshwar Kumar
             </span>
             . All rights reserved.
@@ -40,14 +40,14 @@ export default function Footer() {
           >
             <span>Built with</span>
             <motion.span
-              className="px-2 py-1 bg-gradient-to-r from-purple-500/10 to-pink-500/10 border border-purple-500/20 rounded-md text-purple-300 font-medium"
+              className="px-2 py-1 bg-linear-to-r from-purple-500/10 to-pink-500/10 border border-purple-500/20 rounded-md text-purple-300 font-medium"
               whileHover={{ y: -2 }}
             >
               Next.js
             </motion.span>
             <span>&</span>
             <motion.span
-              className="px-2 py-1 bg-gradient-to-r from-blue-500/10 to-cyan-500/10 border border-blue-500/20 rounded-md text-blue-300 font-medium"
+              className="px-2 py-1 bg-linear-to-r from-blue-500/10 to-cyan-500/10 border border-blue-500/20 rounded-md text-blue-300 font-medium"
               whileHover={{ y: -2 }}
             >
               Tailwind CSS
@@ -102,9 +102,9 @@ export default function Footer() {
 
       {/* Scroll progress bar at bottom */}
       <motion.div
-        className="absolute bottom-0 left-0 h-1 bg-gradient-to-r from-purple-500 via-pink-500 to-blue-500"
+        className="absolute bottom-0 left-0 h-1 bg-linear-to-r from-purple-500 via-pink-500 to-blue-500"
         style={{
-          scaleX: typeof window !== 'undefined' 
+          scaleX: typeof window !== 'undefined' && typeof document !== 'undefined'
             ? window.scrollY / (document.documentElement.scrollHeight - window.innerHeight)
             : 0,
           transformOrigin: "0%",

@@ -3,7 +3,7 @@ import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
 import { useState, useEffect } from "react";
 
 export default function CodingProfiles() {
-  const [hoveredIndex, setHoveredIndex] = useState(null);
+  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
 
@@ -12,7 +12,7 @@ export default function CodingProfiles() {
   const y = useSpring(mouseY, springConfig);
 
   useEffect(() => {
-    const handleMouseMove = (e) => {
+    const handleMouseMove = (e: MouseEvent) => {
       mouseX.set(e.clientX);
       mouseY.set(e.clientY);
     };
@@ -92,7 +92,6 @@ export default function CodingProfiles() {
       y: 0,
       transition: {
         duration: 0.6,
-        ease: [0.22, 1, 0.36, 1],
       },
     },
   };
@@ -135,13 +134,13 @@ export default function CodingProfiles() {
             05.
           </motion.span>
           <motion.h2
-            className="text-3xl md:text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-white to-gray-400"
+            className="text-3xl md:text-4xl font-bold bg-clip-text text-transparent bg-linear-to-r from-white to-gray-400"
             whileHover={{ scale: 1.02 }}
           >
             Coding Profiles
           </motion.h2>
           <motion.div
-            className="flex-1 h-px bg-gradient-to-r from-purple-500/50 to-transparent"
+            className="flex-1 h-px bg-linear-to-r from-purple-500/50 to-transparent"
             initial={{ scaleX: 0 }}
             whileInView={{ scaleX: 1 }}
             viewport={{ once: true }}
@@ -177,7 +176,7 @@ export default function CodingProfiles() {
           >
             {/* Animated gradient border */}
             <motion.div
-              className={`absolute -inset-[1px] bg-gradient-to-r ${profile.gradient} rounded-2xl opacity-0 blur group-hover:opacity-75 transition-opacity duration-500`}
+              className={`absolute -inset-px bg-linear-to-r ${profile.gradient} rounded-2xl opacity-0 blur group-hover:opacity-75 transition-opacity duration-500`}
               animate={{
                 opacity: hoveredIndex === index ? 0.75 : 0,
               }}
@@ -281,7 +280,7 @@ export default function CodingProfiles() {
                 whileHover={{ scale: 1.05 }}
               >
                 <motion.div
-                  className={`w-2 h-2 rounded-full bg-gradient-to-r ${profile.gradient}`}
+                  className={`w-2 h-2 rounded-full bg-linear-to-r ${profile.gradient}`}
                   animate={{
                     scale: [1, 1.5, 1],
                     opacity: [1, 0.5, 1],

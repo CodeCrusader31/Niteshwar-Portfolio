@@ -136,7 +136,6 @@ export default function Skills() {
       y: 0,
       transition: {
         duration: 0.6,
-        ease: [0.22, 1, 0.36, 1],
       },
     },
   };
@@ -183,13 +182,13 @@ export default function Skills() {
             04.
           </motion.span>
           <motion.h2
-            className="text-3xl md:text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-white to-gray-400"
+            className="text-3xl md:text-4xl font-bold bg-clip-text text-transparent bg-linear-to-r from-white to-gray-400"
             whileHover={{ scale: 1.02 }}
           >
             Skills & Technologies
           </motion.h2>
           <motion.div
-            className="flex-1 h-px bg-gradient-to-r from-purple-500/50 to-transparent"
+            className="flex-1 h-px bg-linear-to-r from-purple-500/50 to-transparent"
             initial={{ scaleX: 0 }}
             whileInView={{ scaleX: 1 }}
             viewport={{ once: true }}
@@ -225,7 +224,7 @@ export default function Skills() {
           >
             {/* Gradient border on hover */}
             <motion.div
-              className={`absolute -inset-[1px] bg-gradient-to-r ${category.gradient} rounded-2xl opacity-0 blur group-hover:opacity-75 transition-opacity duration-500`}
+              className={`absolute -inset-px bg-linear-to-r ${category.gradient} rounded-2xl opacity-0 blur group-hover:opacity-75 transition-opacity duration-500`}
               animate={{
                 opacity: hoveredCategory === categoryIndex ? 0.75 : 0,
               }}
@@ -246,7 +245,7 @@ export default function Skills() {
                   {category.icon}
                 </motion.span>
                 <motion.h3
-                  className={`text-lg md:text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r ${category.gradient}`}
+                  className={`text-lg md:text-xl font-bold bg-clip-text text-transparent bg-linear-to-r ${category.gradient}`}
                   whileHover={{ x: 5 }}
                 >
                   {category.title}
@@ -275,7 +274,7 @@ export default function Skills() {
                     >
                       {/* Animated dot */}
                       <motion.div
-                        className={`w-2 h-2 rounded-full bg-gradient-to-r ${category.gradient}`}
+                        className={`w-2 h-2 rounded-full bg-linear-to-r ${category.gradient}`}
                         animate={{
                           scale:
                             hoveredSkill === `${categoryIndex}-${skillIndex}`
@@ -298,7 +297,7 @@ export default function Skills() {
 
                       {/* Progress bar on hover */}
                       <motion.div
-                        className={`absolute bottom-0 left-0 h-0.5 bg-gradient-to-r ${category.gradient} rounded-full`}
+                        className={`absolute bottom-0 left-0 h-0.5 bg-linear-to-r ${category.gradient} rounded-full`}
                         initial={{ width: 0 }}
                         whileHover={{ width: "100%" }}
                         transition={{ duration: 0.3 }}
@@ -350,7 +349,7 @@ export default function Skills() {
             className="relative group"
             whileHover={{ y: -5 }}
           >
-            <motion.div className="absolute -inset-[1px] bg-gradient-to-r from-purple-500 to-blue-500 rounded-xl opacity-0 blur group-hover:opacity-50 transition-opacity duration-500" />
+            <motion.div className="absolute -inset-px bg-linear-to-r from-purple-500 to-blue-500 rounded-xl opacity-0 blur group-hover:opacity-50 transition-opacity duration-500" />
             <div className="relative bg-gray-900/50 backdrop-blur-sm border border-gray-800 rounded-xl p-6 text-center hover:border-gray-700 transition-all">
               <motion.div
                 className="text-3xl mb-2"
@@ -359,7 +358,7 @@ export default function Skills() {
                 {stat.icon}
               </motion.div>
               <motion.div
-                className="text-2xl md:text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-blue-400 mb-1"
+                className="text-2xl md:text-3xl font-bold bg-clip-text text-transparent bg-linear-to-r from-purple-400 to-blue-400 mb-1"
                 whileHover={{ scale: 1.1 }}
               >
                 {stat.value}
@@ -379,7 +378,7 @@ export default function Skills() {
         transition={{ delay: 0.7 }}
       >
         <motion.div
-          className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-purple-500/10 to-blue-500/10 border border-purple-500/20 rounded-full text-purple-300"
+          className="inline-flex items-center gap-2 px-6 py-3 bg-linear-to-r from-purple-500/10 to-blue-500/10 border border-purple-500/20 rounded-full text-purple-300"
           whileHover={{ scale: 1.05 }}
         >
           <motion.span

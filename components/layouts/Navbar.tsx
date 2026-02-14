@@ -57,7 +57,7 @@ export default function Navbar() {
     >
       {/* Gradient line at top */}
       <motion.div
-        className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-purple-500 to-transparent"
+        className="absolute top-0 left-0 right-0 h-px bg-linear-to-r from-transparent via-purple-500 to-transparent"
         initial={{ scaleX: 0 }}
         animate={{ scaleX: 1 }}
         transition={{ duration: 1, delay: 0.2 }}
@@ -75,14 +75,14 @@ export default function Navbar() {
             >
               {/* Animated gradient text */}
               <span className="relative inline-block">
-                <span className="bg-clip-text text-transparent bg-gradient-to-r from-purple-400 via-pink-400 to-blue-400">
+                <span className="bg-clip-text text-transparent bg-linear-to-r from-purple-400 via-pink-400 to-blue-400">
                   Niteshwar
                 </span>
                 <span className="text-gray-400">.dev</span>
                 
                 {/* Underline animation */}
                 <motion.span
-                  className="absolute -bottom-1 left-0 h-0.5 bg-gradient-to-r from-purple-400 to-blue-400"
+                  className="absolute -bottom-1 left-0 h-0.5 bg-linear-to-r from-purple-400 to-blue-400"
                   initial={{ width: 0 }}
                   whileHover={{ width: "100%" }}
                   transition={{ duration: 0.3 }}
@@ -130,7 +130,7 @@ export default function Navbar() {
                     {isActive && (
                       <motion.span
                         layoutId="activeSection"
-                        className="absolute inset-0 bg-gradient-to-r from-purple-500/10 to-blue-500/10 rounded-lg border border-purple-500/20"
+                        className="absolute inset-0 bg-linear-to-r from-purple-500/10 to-blue-500/10 rounded-lg border border-purple-500/20"
                         transition={{ type: "spring", stiffness: 380, damping: 30 }}
                       />
                     )}
@@ -143,7 +143,7 @@ export default function Navbar() {
 
                     {/* Bottom border animation */}
                     <motion.span
-                      className="absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r from-purple-400 to-blue-400 scale-x-0 group-hover:scale-x-100 transition-transform origin-left"
+                      className="absolute bottom-0 left-0 right-0 h-0.5 bg-linear-to-r from-purple-400 to-blue-400 scale-x-0 group-hover:scale-x-100 transition-transform origin-left"
                     />
                   </Link>
                 </motion.div>
@@ -180,8 +180,8 @@ export default function Navbar() {
             whileTap={{ scale: 0.9 }}
           >
             <div className="w-6 h-5 relative flex flex-col justify-between">
-              <motion.span
-                className="w-full h-0.5 bg-gradient-to-r from-purple-400 to-blue-400 rounded-full"
+                <motion.span
+                  className="w-full h-0.5 bg-linear-to-r from-purple-400 to-blue-400 rounded-full"
                 animate={{
                   rotate: isMobileMenuOpen ? 45 : 0,
                   y: isMobileMenuOpen ? 9 : 0,
@@ -189,14 +189,14 @@ export default function Navbar() {
                 transition={{ duration: 0.3 }}
               />
               <motion.span
-                className="w-full h-0.5 bg-gradient-to-r from-purple-400 to-blue-400 rounded-full"
+                className="w-full h-0.5 bg-linear-to-r from-purple-400 to-blue-400 rounded-full"
                 animate={{
                   opacity: isMobileMenuOpen ? 0 : 1,
                 }}
                 transition={{ duration: 0.2 }}
               />
               <motion.span
-                className="w-full h-0.5 bg-gradient-to-r from-purple-400 to-blue-400 rounded-full"
+                className="w-full h-0.5 bg-linear-to-r from-purple-400 to-blue-400 rounded-full"
                 animate={{
                   rotate: isMobileMenuOpen ? -45 : 0,
                   y: isMobileMenuOpen ? -9 : 0,
@@ -235,7 +235,7 @@ export default function Navbar() {
                     href={link.href}
                     className={`block px-4 py-3 rounded-lg text-sm font-medium transition-all ${
                       isActive
-                        ? "bg-gradient-to-r from-purple-500/10 to-blue-500/10 border border-purple-500/20 text-purple-400"
+                        ? "bg-linear-to-r from-purple-500/10 to-blue-500/10 border border-purple-500/20 text-purple-400"
                         : "text-gray-400 hover:text-white hover:bg-gray-800/50"
                     }`}
                     onClick={() => {
@@ -274,7 +274,7 @@ export default function Navbar() {
 
       {/* Bottom gradient line */}
       <motion.div
-        className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-blue-500 to-transparent opacity-50"
+        className="absolute bottom-0 left-0 right-0 h-px bg-linear-to-r from-transparent via-blue-500 to-transparent opacity-50"
         animate={{
           opacity: isScrolled ? 0.5 : 0,
         }}
@@ -283,9 +283,9 @@ export default function Navbar() {
 
       {/* Scroll progress bar */}
       <motion.div
-        className="absolute bottom-0 left-0 h-0.5 bg-gradient-to-r from-purple-500 via-pink-500 to-blue-500"
+        className="absolute bottom-0 left-0 h-0.5 bg-linear-to-r from-purple-500 via-pink-500 to-blue-500"
         style={{
-          scaleX: useTransform(scrollY, [0, document.documentElement.scrollHeight - window.innerHeight], [0, 1]),
+          scaleX: useTransform(scrollY, [0, typeof document !== 'undefined' ? document.documentElement.scrollHeight - window.innerHeight : 1], [0, 1]),
           transformOrigin: "0%",
         }}
       />
