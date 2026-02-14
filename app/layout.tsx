@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import Navbar from "../components/layouts/Navbar";
+import Footer from "../components/layouts/Footer";
 
 
 
@@ -26,10 +28,12 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} font-sans bg-[#0f172a] text-white`}
-      >
-        {children}
+      <body className="bg-black text-white">
+        <Navbar />
+        <main className="min-h-screen px-6 md:px-20">
+          {children}
+        </main>
+        <Footer />
       </body>
     </html>
   );
