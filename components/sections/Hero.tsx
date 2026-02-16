@@ -463,7 +463,7 @@ export default function Hero() {
       </motion.div>
 
       {/* Scroll indicator */}
-      <motion.div
+      {/* <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 2 }}
@@ -492,7 +492,7 @@ export default function Hero() {
             />
           </motion.svg>
         </motion.div>
-      </motion.div>
+      </motion.div> */}
     </section>
   );
 }
@@ -579,4 +579,3 @@ function SocialLink({ href, label, icon, download }: { href: string; label: stri
     </motion.a>
   );
 }
-

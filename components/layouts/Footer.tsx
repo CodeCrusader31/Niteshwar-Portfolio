@@ -1,7 +1,27 @@
 'use client';
 import { motion } from "framer-motion";
+import { useEffect, useState } from "react";
 
 export default function Footer() {
+  const [progress, setProgress] = useState(0);
+
+  useEffect(() => {
+    const update = () => {
+      const scrollTop = window.scrollY || window.pageYOffset;
+      const max = document.documentElement.scrollHeight - window.innerHeight;
+      const value = max > 0 ? Math.min(1, scrollTop / max) : 0;
+      setProgress(value);
+    };
+
+    update();
+    window.addEventListener("scroll", update, { passive: true });
+    window.addEventListener("resize", update);
+    return () => {
+      window.removeEventListener("scroll", update);
+      window.removeEventListener("resize", update);
+    };
+  }, []);
+
   return (
     <footer className="relative border-t border-gray-800 mt-24">
       {/* Top gradient line */}
@@ -104,11 +124,10 @@ export default function Footer() {
       <motion.div
         className="absolute bottom-0 left-0 h-1 bg-linear-to-r from-purple-500 via-pink-500 to-blue-500"
         style={{
-          scaleX: typeof window !== 'undefined' && typeof document !== 'undefined'
-            ? window.scrollY / (document.documentElement.scrollHeight - window.innerHeight)
-            : 0,
+          scaleX: progress,
           transformOrigin: "0%",
         }}
+        aria-hidden
       />
     </footer>
   );
