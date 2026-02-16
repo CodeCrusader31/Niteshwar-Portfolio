@@ -579,3 +579,4 @@ function SocialLink({ href, label, icon, download }: { href: string; label: stri
     </motion.a>
   );
 }
+

@@ -18,8 +18,8 @@ export const projects = [
       "LLM",
       "Redis",
     ],
-    github: "#",
-    live: "#",
+    github: "https://github.com/CodeCrusader31/localFix",
+    live: "https://local-fix-self.vercel.app/",
   },
   {
     title: "MindScribe",
@@ -31,8 +31,8 @@ export const projects = [
       "Automated email notifications system",
       "Optimized MongoDB queries reducing response time by 35%",
     ],
-    tech: ["Next.js", "Node.js", "MongoDB", "JWT", "WebSockets"],
-    github: "#",
-    live: "#",
+    tech: ["Next.js", "Node.js", "MongoDB", "JWT", "WebSockets","Nodemailer"],
+    github: "https://github.com/CodeCrusader31/MindScribe",
+    live: "https://mind-scribe-neon.vercel.app/",
   },
 ];
