@@ -30,7 +30,7 @@ export default function CodingProfiles() {
       description: "Problem Solving & Algorithms",
       stats: [
         { label: "Problems Solved", value: "550+", icon: "✅" },
-        { label: "Contest Rating", value: "1637", icon: "🏆" },
+        { label: "Contest Rating", value: "1700+", icon: "🏆" },
         { label: "Max Streak", value: "70 days", icon: "🔥" },
       ],
       gradient: "from-yellow-500 to-orange-500",
