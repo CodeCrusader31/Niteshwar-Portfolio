@@ -22,6 +22,29 @@ export default function Experience() {
   }, [mouseX, mouseY]);
 
   const experiences = [
+
+    {
+  role: "Full Stack Developer",
+  company: "Freelance",
+  period: "Nov 2025 – Present",
+  type: "Freelance",
+  achievements: [
+    {
+      text: "Built and deployed 3+ production-grade web applications using Next.js with SSR and SSG, achieving improved SEO scores and sub-2s page load times for clients.",
+      icon: "🚀",
+    },
+    {
+      text: "Architected reusable React component libraries with custom hooks and Context API, reducing feature development time by 40% across multiple projects.",
+      icon: "⚛️",
+    },
+    {
+      text: "Integrated RESTful and third-party APIs (payment gateways, auth providers) with robust error handling, loading states, and optimistic UI updates for seamless user experience.",
+      icon: "🔄",
+    },
+  ],
+  gradient: "from-blue-500 to-cyan-500",
+  glowColor: "rgba(59, 130, 246, 0.3)",
+},
     {
       role: "Full Stack Intern",
       company: "Grover Techies",
@@ -56,28 +79,7 @@ export default function Experience() {
       gradient: "from-purple-500 to-pink-500",
       glowColor: "rgba(168, 85, 247, 0.3)",
     },
-    {
-      role: "React Intern",
-      company: "Freelance",
-      period: "Jan 2025 – Feb 2025",
-      type: "Freelance",
-      achievements: [
-        {
-          text: "Built modular and reusable React components using hooks and component-driven architecture.",
-          icon: "⚛️",
-        },
-        {
-          text: "Integrated frontend with backend REST APIs, handling asynchronous data, error states, and loading flows.",
-          icon: "🔄",
-        },
-        {
-          text: "Improved UI performance by optimizing rendering logic and reducing unnecessary re-renders.",
-          icon: "⚡",
-        },
-      ],
-      gradient: "from-blue-500 to-cyan-500",
-      glowColor: "rgba(59, 130, 246, 0.3)",
-    },
+   
   ];
 
   const container = {

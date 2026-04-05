@@ -333,7 +333,7 @@ export default function Hero() {
             {/* Resume */}
             <MagneticButton>
               <a
-                href="https://drive.google.com/file/d/1z_eCTUllUXBDgmIBA-T8g4n4zA9cfWQ7/view?usp=drivesdk"
+                href="https://drive.google.com/file/d/12Jng6IPUDGJvTPmcQl35tE6LL6ygssH0/view?usp=drivesdk"
                 download
                 className="group relative px-6 py-3 border-2 border-purple-500/50 text-white font-semibold rounded-lg overflow-hidden transition-all duration-300 hover:border-purple-400 hover:shadow-[0_0_20px_rgba(168,85,247,0.3)] flex items-center gap-2"
                 onMouseEnter={() => setIsHovering(true)}
