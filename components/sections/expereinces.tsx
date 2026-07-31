@@ -23,25 +23,35 @@ export default function Experience() {
 
   const experiences = [
 
-    {
-  role: "Full Stack Developer",
-  company: "Freelance",
-  period: "Nov 2025 – Present",
-  type: "Freelance",
+ {
+  role: "Software Development Engineer Intern",
+  company: "CreditSea",
+  period: "Jun 2026 – Present",
+  type: "Internship",
+
   achievements: [
     {
-      text: "Built and deployed 3+ production-grade web applications using Next.js with SSR and SSG, achieving improved SEO scores and sub-2s page load times for clients.",
+      text: "Worked on the Communication Engine to automate customer communication workflows across IVR, SMS, and WhatsApp.",
+      icon: "📨",
+    },
+    {
+      text: "Built IVR webhook workflows to process call responses, dispositions, retries, and campaign events.",
+      icon: "📞",
+    },
+    {
+      text: "Optimized CreditSea's homepage performance score from 42 to 85.",
       icon: "🚀",
     },
     {
-      text: "Architected reusable React component libraries with custom hooks and Context API, reducing feature development time by 40% across multiple projects.",
-      icon: "⚛️",
+      text: "Implemented multilingual support across the user journey, including registration, approval, KYC, and disbursal.",
+      icon: "🌐",
     },
     {
-      text: "Integrated RESTful and third-party APIs (payment gateways, auth providers) with robust error handling, loading states, and optimistic UI updates for seamless user experience.",
-      icon: "🔄",
+      text: "Automated employee attendance regularization workflows in HRMS.",
+      icon: "⚙️",
     },
   ],
+
   gradient: "from-blue-500 to-cyan-500",
   glowColor: "rgba(59, 130, 246, 0.3)",
 },
